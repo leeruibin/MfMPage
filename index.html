@@ -1,0 +1,1133 @@
+<html lang="en"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MfM</title>
+    <meta name="description" content="Unify the Training of Multiple Video and Image Generation and Manipulation Tasks">
+    <meta name="keywords" content="Video Generation, Video Editing, Diffusion Transformer, Unified Model">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#9ACBD0">
+    <meta property="og:image" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="shortcut icon" href="assets/logos/MfM_logo.png" type="image/x-icon">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-stretch: 100%;
+            font-display: block;
+            font-weight: 300 700;
+            src: url('./assets/fonts/roboto.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        video {
+            background-color: #000000;
+            aspect-ratio: 16 / 9;
+        }
+
+        section.portrait video {
+            background-color: #000000;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+        }
+
+        section.portrait .prompt-wrap.full-screen-wrap video {
+            object-fit: cover;
+        }
+
+        section.portrait .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        section.portrait2 .flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        section.portrait .flex > div {
+            flex: 0 0 calc((100% - 5 * 10px) / 6);
+        }
+        section.portrait2 .flex > div {
+            flex: 0 0 calc((100% - 1 * 10px) / 2);
+        }
+
+        section.portrait .prompt {
+            font-size: 10px;
+        }
+        section.portrait2 .prompt {
+            font-size: 12px;
+        }
+
+        section.portrait .flex-row {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        section.portrait2 .flex-row {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            section.portrait .flex > div {
+                flex: 0 0 calc((100% - 1 * 10px) / 2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            section.portrait2 .flex > div {
+                flex: 0 0 calc((100% - 0 * 10px) / 1);
+            }
+        }
+
+        /* Ensure prompt adjusts for portrait mode */
+        .portrait .prompt {
+            position: absolute;  /* Allow positioning relative to the container */
+            bottom: 5%;          /* Adjust this to control the vertical placement of the prompt */
+            left: 50%;           /* Center horizontally */
+            transform: translateX(-50%); /* Offset by 50% of its width to truly center */
+            max-width: 80%;
+            text-align: center;  /* Center the text inside the prompt */
+            color: white;        /* Optional, if you want the text to stand out */
+            font-size: 1.2em;    /* Optional, adjust the text size */
+        }
+
+        .portrait2 .prompt{
+            position: absolute;  /* Allow positioning relative to the container */
+            bottom: 5%;          /* Adjust this to control the vertical placement of the prompt */
+            left: 50%;           /* Center horizontally */
+            transform: translateX(-50%); /* Offset by 50% of its width to truly center */
+            max-width: 80%;
+            text-align: center;  /* Center the text inside the prompt */
+            color: white;        /* Optional, if you want the text to stand out */
+            font-size: 1.2em;    /* Optional, adjust the text size */
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: "Roboto", sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        #intro {
+            padding: 90px 0 80px 0;
+            justify-content: center; /* Center content vertically */
+            text-align: center; /* Center text alignment */
+        }
+
+        #intro h1 {
+            font-size: 80px;
+            font-weight: 300;
+            margin: 20px 0;
+        }
+
+        #intro h2 {
+            margin: 20px 0 40px 0;
+            font-weight: 300;
+            color: #ccc
+        }
+
+        #intro h2 strong {
+            color: #fff;
+        }
+
+        .authors {
+            font-size: 18px;
+            font-weight: 300;
+            color: #bbb;
+            text-align: center;
+            margin-bottom: 25px;
+            width: 70%; /* More compact */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .author-block {
+            display: inline-block;
+            margin: 0 10px 0 10px;
+        }
+
+        .author-block a {
+            color: #d1d1d1; /* Lighter color for links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .author-block a:hover {
+            color: #fff; /* Hover effect */
+        }
+
+        .author-affiliation {
+            font-size: 16px;
+            color: #bbb;
+            text-align: center;
+            margin-bottom: 30px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .author-affiliation .author-block {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        section {
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 0 10%;
+        }
+
+        .button {
+            background-color: #ccc;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: background-color 0.5s;
+            text-decoration: none;
+            margin-right: 8px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background-color: #fff;
+        }
+
+        .bibtex-section {
+            background-color: #111;
+            padding: 40px 10%;
+            text-align: center;
+            margin-top: 60px;
+            color: #ccc;
+        }
+
+        .bibtex-section h3 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .bibtex-code {
+            background-color: #222;
+            color: #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            display: inline-block;
+            font-family: monospace;
+            max-width: 800px;
+            overflow-x: auto;
+        }
+
+        section {
+            margin-top: 100px;
+        }
+        section:first-of-type {
+            margin-top: 0;
+        }
+
+        .title {
+            background-color: #000;
+            position: sticky;
+            top: 0;
+            padding: 20px 10%;
+            font-size: 30px;
+            font-weight: 600;
+            z-index: 1000;
+            min-height: 60px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e6dddd;  /* Dark subtle line */
+            padding-bottom: 15px;           /* Space between text and line */
+            margin-bottom: 20px;            /* Space below the line */
+        }
+
+        .description {
+            padding: 0 10% 20px 10%;
+            color: #999;
+            line-height: 25px;
+            font-weight: 300;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .flex-row {
+            display: flex;
+            column-gap: 5px;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding: 0 5px 5px 5px;
+
+        }
+
+        .flex-row > div {
+            flex-grow: 1;
+            flex-basis: 0;
+            position: relative;
+        }
+
+        .flex > div {
+            width: calc(100% / 3 - 5px * 2 / 3);
+            margin-top: 2.5px;
+            margin-bottom: 2.5px;
+            position: relative;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 5px;
+        }
+
+        .prompt-wrap {
+            position: relative;
+        }
+
+        .flex-2 {
+            justify-content: center;
+            column-gap: 5px;
+        }
+        .flex-2 > div {
+            width: calc(100% / 2 - 5px / 2);
+            min-width: calc(100% / 3 - 5px * 2 / 3);
+            max-width: calc(100vh - 200px);
+        }
+
+        video, img {
+            width: 100%;
+        }
+
+        .loading-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-text {
+            font-size: 24px;
+            margin-bottom: 10px; /* Adds space between text and icon */
+        }
+
+        .loading-icon {
+            font-size: 48px;
+        }
+
+        .prompt {
+            max-width: calc(100% - 20px);
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.9);
+            font-size: 10px;
+            backdrop-filter: blur(10px);
+            bottom: 10px;
+            left: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            box-sizing: border-box;
+        }
+
+        .flex-very-compact .full-screen-button {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            border-radius: 0;
+        }
+
+        .chinese {
+            font-family: 'Noto Sans SC', sans-serif; /* Choose a Chinese font */
+            font-weight: bold;
+            color: #d18585; /* A strong red */
+            font-size: 1.1em; /* Slightly larger */
+        }
+
+        @media (hover: hover) {
+            .prompt-wrap:hover .prompt,
+            .full-screen-wrap:hover .full-screen-button {
+                opacity: 1;
+                pointer-events: all;
+            }
+            #contributors a:hover {
+                background-color: #222;
+            }
+        }
+
+        @media (hover: none) {
+            #contributors a {
+                pointer-events: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flex-dynamic > div {
+                width: calc(100% / 2 - 5px / 2);
+            }
+        }
+
+        @media (max-width: 640px) {
+            #intro h1 {
+                font-size: 50px;
+            }
+            #intro h2 {
+                font-size: 20px;
+            }
+            .ruler {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 512px) {
+            .flex-dynamic > div,
+            .flex-dynamic-1 > div {
+                width: 100%;
+            }
+
+            .content {
+                padding: 0 12px;
+            }
+
+            .description {
+                padding: 0 12px 20px 12px;
+            }
+
+            .title {
+                padding: 20px 12px;
+            }
+
+            .ruler-tight {
+                font-size: 6px;
+                column-gap: 0;
+            }
+
+            .title-long {
+                font-size: 16px;
+            }
+
+        }
+
+        .margin-top {
+            margin-top: 50px;
+        }
+
+        .ruler {
+            text-align: center;
+            position: sticky;
+            top: 60px;
+            z-index: 999;
+            background-color: #000;
+            color: #999;
+            padding: 5px 0;
+        }
+
+        .ruler > div {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .selected {
+            box-shadow: 0 0 0 5px #fff;
+        }
+
+        .acknowledgements-section {
+            padding: 50px 10%;
+            text-align: center;
+            margin-top: 60px;
+            color: #ccc;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            justify-content: left;
+            width: 100%;
+            height: 100%;
+            /*border: 2px solid #ccc;*/
+        }
+
+        .slidervideo {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition:0.4s ease;
+            object-fit:contain;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: ew-resize;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+    <section id="intro">
+        <div class="content">
+            <h1><img id="affiliation-logo" src="./assets/logos/MfM_logo.png" alt="Logo" style="max-height: 128px; height: auto; width: auto; vertical-align: middle;"></h1>
+            <h2><strong>Unify the Training of Multiple Video and Image Generation and Manipulation Tasks</strong></h2>
+
+
+            <!-- <a class="button" href="https://arxiv.org/abs/2503.07598" rel="noopener noreferrer">
+                <i class="ai ai-arxiv" style="font-size:17px"></i>
+                Paper
+            </a>
+            <a class="button" href="https://github.com/ali-vilab/VACE" rel="noopener noreferrer">
+                <i class="fa fa-github" style="font-size:17px"></i>
+                GitHub
+            </a>
+            <a href="https://huggingface.co/collections/ali-vilab/vace-67eca186ff3e3564726aff38" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">🤗</span>
+                <span>HF Model</span>
+            </a>
+            <a href="https://modelscope.cn/collections/VACE-8fa5fcfd386e43" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">🤖</span>
+                <span>MS Model</span>
+            </a>
+            <a class="button" href="https://arxiv.org/abs/2410.00086" rel="noopener noreferrer">
+                <i class="ai ai-arxiv" style="font-size:17px"></i>
+                ACE (ICLR25)
+            </a>
+            <a class="button" href="https://arxiv.org/abs/2501.02487" rel="noopener noreferrer">
+                <i class="ai ai-arxiv" style="font-size:17px"></i>
+                ACE++
+            </a> -->
+<!--            <h3 style="font-weight: lighter;">(Project Page in Progress~)</h3>-->
+
+            <div class="flex-2 flex-dynamic-1" style="display: flex; justify-content: center;">
+                <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                    <div class="loading-placeholder">
+                        <div class="loading-text">Loading...</div>
+                        <div class="loading-icon">✨</div>
+                    </div>
+                    <video controls autoplay playsinline muted loop onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src=""></video>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+        
+        
+        
+
+    <section id="video_1">
+        <div class="title">
+            Visual comparision of MfM on T2V generation tasks
+        </div>
+        <div class="description">
+           <h2><strong>Case 1: A beautiful coastal beach in spring, waves lapping on sand, oil painting.</strong>
+        </div>
+        <script>
+            // Define a unified video template function that accepts customization parameters
+            function createVideoTemplate(options = {}) {
+                // Default options
+                const defaults = {
+                    videoWidth: '480px',
+                    promptStyle: 'emphasized', // 'standard' or 'emphasized'
+                };
+                
+                // Merge provided options with defaults
+                const settings = {...defaults, ...options};
+                
+                // Return the template function that will be executed for each video
+                return function(video) {
+                    // Determine prompt HTML based on style setting
+                    let promptHTML = '';
+                    if (settings.promptStyle === 'emphasized') {
+                        promptHTML = `<div class="prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
+                    } else {
+                        promptHTML = `<div class="prompt">${video.prompt}</div>`;
+                    }
+                    return `
+                        <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                            <div class="loading-placeholder">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">✨</div>
+                            </div>
+                            <video autoplay playsinline muted loop 
+                                class="${settings.videoClass}"
+                                style="width: ${settings.videoWidth}; margin: 0 auto; display: block;"
+                                src="${video.filename}" 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';">
+                            </video>
+                            ${promptHTML}
+                        </div>
+                    `;
+                };
+            }
+        </script>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/t2v_case1_oil_paint/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
+                    { filename: path+"sora.mp4", prompt: "Sora" },
+                    { filename: path+"Gen3.mp4", prompt: "Gen-3" },
+                    { filename: path+"pika.mp4", prompt: "PikaLabs" },
+                    { filename: path+"ltx.mp4", prompt: "LTX-Video" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
+                    { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
+                    // Add any other videos in the directory
+                ];
+                
+                // Create template with default settings
+                videoTemplate = createVideoTemplate({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+        
+        <div class="description">
+           <h2><strong>Case 2: A person walking in the snowstorm.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/t2v_case2_walk_in_snow/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
+                    { filename: path+"sora.mp4", prompt: "Sora" },
+                    { filename: path+"Gen3.mp4", prompt: "Gen-3" },
+                    { filename: path+"pika.mp4", prompt: "PikaLabs" },
+                    { filename: path+"ltx.mp4", prompt: "LTX-Video" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
+                    { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplate({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+           <h2><strong>Case 3: A koala bear playing piano in the forest.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/t2v_case3_play_piano/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
+                    { filename: path+"sora.mp4", prompt: "Sora" },
+                    { filename: path+"Gen3.mp4", prompt: "Gen-3" },
+                    { filename: path+"pika.mp4", prompt: "PikaLabs" },
+                    { filename: path+"ltx.mp4", prompt: "LTX-Video" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
+                    { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplate({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+           <h2><strong>Case 4: A bicycle slowing down to stop.</strong></h2>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/t2v_case4_bike/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
+                    { filename: path+"sora.mp4", prompt: "Sora" },
+                    { filename: path+"Gen3.mp4", prompt: "Gen-3" },
+                    { filename: path+"pika.mp4", prompt: "PikaLabs" },
+                    { filename: path+"ltx.mp4", prompt: "LTX-Video" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
+                    { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplate({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+    </section>
+
+    <section id="video_2">
+        <div class="title">
+            Visual comparision of MfM on I2V generation tasks
+        </div>
+        
+        <script>
+            // Define a unified video template function that accepts customization parameters
+            function createVideoTemplateI2V(options = {}) {
+                // Default options
+                const defaults = {
+                    videoWidth: '480px',
+                    promptStyle: 'emphasized', // 'standard' or 'emphasized'
+                };
+                
+                // Merge provided options with defaults
+                const settings = {...defaults, ...options};
+                
+                // Return the template function that will be executed for each video
+                return function(video) {
+                    // Determine prompt HTML based on style setting
+                    let promptHTML = '';
+                    if (settings.promptStyle === 'emphasized') {
+                        promptHTML = `<div class="prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
+                    } else {
+                        promptHTML = `<div class="prompt">${video.prompt}</div>`;
+                    }
+                    return `
+                        <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                            <div class="loading-placeholder">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">✨</div>
+                            </div>
+                            <video autoplay playsinline muted loop 
+                                class="${settings.videoClass}"
+                                style="width: ${settings.videoWidth}; margin: 0 auto; display: block;"
+                                src="${video.filename}" 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';">
+                            </video>
+                            ${promptHTML}
+                        </div>
+                    `;
+                };
+            }
+        </script>
+
+        <div class="description">
+            <h2><strong>Case 1: a sea turtle swimming in the ocean under the water.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/i2v_case1_turtle/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                    { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
+                    { filename: path+"magi-1.mp4", prompt: "Magi-1" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                    { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
+                    { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
+                    { filename: path+"consist.mp4", prompt: "ConsistI2V" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateI2V({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+        
+        <div class="description">
+            <h2><strong>Case 2: a dog carrying a soccer ball in its mouth.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/i2v_case2_dog/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                    { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
+                    { filename: path+"magi-1.mp4", prompt: "Magi-1" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                    { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
+                    { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
+                    { filename: path+"consist.mp4", prompt: "ConsistI2V" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateI2V({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+            <h2><strong>Case 3: a blue fishing boat is navigating in the ocean next to a cruise ship.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/i2v_case3_boat/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                    { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
+                    { filename: path+"magi-1.mp4", prompt: "Magi-1" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                    { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
+                    { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
+                    { filename: path+"consist.mp4", prompt: "ConsistI2V" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateI2V({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+            <h2><strong>Case 4: a couple of horses are running in the dirt.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/i2v_case4_horse/";
+                videos = [
+                    { filename: path+"MfM.mp4", prompt: "MfM" },
+                    { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
+                    { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                    { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
+                    { filename: path+"magi-1.mp4", prompt: "Magi-1" },
+                    { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                    { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
+                    { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
+                    { filename: path+"consist.mp4", prompt: "ConsistI2V" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateI2V({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+    </section>
+
+    <section id="video_3">
+        <div class="title">
+            Visual comparision of MfM on Multi-Task
+        </div>
+
+        <script>
+            // Define a unified video template function that accepts customization parameters
+            function createVideoTemplateTask(options = {}) {
+                // Default options
+                const defaults = {
+                    videoWidth: '480px',
+                    promptStyle: 'emphasized', // 'standard' or 'emphasized'
+                };
+                
+                // Merge provided options with defaults
+                const settings = {...defaults, ...options};
+                
+                // Return the template function that will be executed for each video
+                return function(video) {
+                    // Determine prompt HTML based on style setting
+                    let promptHTML = '';
+                    if (settings.promptStyle === 'emphasized') {
+                        promptHTML = `<div class="prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
+                    } else {
+                        promptHTML = `<div class="prompt">${video.prompt}</div>`;
+                    }
+                    return `
+                        <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                            <div class="loading-placeholder">
+                                <div class="loading-text">Loading...</div>
+                                <div class="loading-icon">✨</div>
+                            </div>
+                            <video autoplay playsinline muted loop 
+                                class="${settings.videoClass}"
+                                style="width: ${settings.videoWidth}; margin: 0 auto; display: block;"
+                                src="${video.filename}" 
+                                onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';">
+                            </video>
+                            ${promptHTML}
+                        </div>
+                    `;
+                };
+            }
+        </script>
+
+        <div class="description">
+            <h2><strong>Video Inpainting.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/VINP/";
+                videos = [
+                    { filename: path+"case1.mp4", prompt: "Input" },
+                    { filename: path+"case3.mp4", prompt: "Input" },
+                    { filename: path+"case5.mp4", prompt: "Input" },
+                    { filename: path+"MfM_1.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_3.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_5.mp4", prompt: "MfM" },
+                    { filename: path+"VACE_1.mp4", prompt: "VACE" },
+                    { filename: path+"VACE_3.mp4", prompt: "VACE" },
+                    { filename: path+"VACE_5.mp4", prompt: "VACE" },
+                    { filename: path+"propainter_1.mp4", prompt: "Propainter" },
+                    { filename: path+"propainter_3.mp4", prompt: "Propainter" },
+                    { filename: path+"propainter_5.mp4", prompt: "Propainter" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateTask({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+            <h2><strong>Video Outpainting.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/VOUTP/";
+                videos = [
+                    { filename: path+"case_2.mp4", prompt: "Input" },
+                    { filename: path+"case_4.mp4", prompt: "Input" },
+                    { filename: path+"case_5.mp4", prompt: "Input" },
+                    { filename: path+"MfM_2.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_4.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_5.mp4", prompt: "MfM" },
+                    { filename: path+"VACE_2.mp4", prompt: "VACE" },
+                    { filename: path+"VACE_4.mp4", prompt: "VACE" },
+                    { filename: path+"VACE_5.mp4", prompt: "VACE" },
+                    { filename: path+"FYC_2.mp4", prompt: "Follow-your-canvas" },
+                    { filename: path+"FYC_4.mp4", prompt: "Follow-your-canvas" },
+                    { filename: path+"FYC_5.mp4", prompt: "Follow-your-canvas" },
+                    { filename: path+"MMD_2.mp4", prompt: "M3DDM" },
+                    { filename: path+"MMD_4.mp4", prompt: "M3DDM" },
+                    { filename: path+"MMD_5.mp4", prompt: "M3DDM" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateTask({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+            <h2><strong>Video Colorization.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/VCOLOR/";
+                videos = [
+                    { filename: path+"case_2.mp4", prompt: "Input" },
+                    { filename: path+"case_4.mp4", prompt: "Input" },
+                    { filename: path+"case_5.mp4", prompt: "Input" },
+                    { filename: path+"MfM_2.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_4.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_5.mp4", prompt: "MfM" },
+                    { filename: path+"colorm_2.mp4", prompt: "colormnet" },
+                    { filename: path+"colorm_4.mp4", prompt: "colormnet" },
+                    { filename: path+"colorm_5.mp4", prompt: "colormnet" },
+                    { filename: path+"TCVC_2.mp4", prompt: "TCVC" },
+                    { filename: path+"TCVC_4.mp4", prompt: "TCVC" },
+                    { filename: path+"TCVC_5.mp4", prompt: "TCVC" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateTask({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+        <div class="description">
+            <h2><strong>First-last-frame to Video.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/FLF2V/";
+                videos = [
+                    { filename: path+"MfM_1.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_2.mp4", prompt: "MfM" },
+                    { filename: path+"MfM_3.mp4", prompt: "MfM" },
+                    { filename: path+"wanx_1.mp4", prompt: "Wanx-FLF2V" },
+                    { filename: path+"wanx_2.mp4", prompt: "Wanx-FLF2V" },
+                    { filename: path+"wanx_3.mp4", prompt: "Wanx-FLF2V" },
+                    { filename: path+"hunyuan_1.mp4", prompt: "Hunyuan-LoRA" },
+                    { filename: path+"hunyuan_2.mp4", prompt: "Hunyuan-LoRA" },
+                    { filename: path+"hunyuan_3.mp4", prompt: "Hunyuan-LoRA" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateTask({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+    </section>
+
+    <section id="video_4">
+        <div class="title">
+            Visual comparison of ablation study
+        </div>
+
+        <div class="description">
+            <h2><strong>Video Inpainting.</strong>
+        </div>
+        <div class="flex flex-dynamic">
+            <script>
+                // Define the video sources and their prompt texts
+                path = "./assets/videos/ablation/";
+                videos = [
+                    { filename: path+"case1_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"case2_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"case3_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"case1_T2V.mp4", prompt: "T2V w/o MfM" },
+                    { filename: path+"case2_T2V.mp4", prompt: "T2V w/o MfM" },
+                    { filename: path+"case3_T2V.mp4", prompt: "T2V w/o MfM" },
+                    { filename: path+"case4_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"case5_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"case6_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"case4_T2V.mp4", prompt: "T2V w/o MfM" },
+                    { filename: path+"case5_T2V.mp4", prompt: "T2V w/o MfM" },
+                    { filename: path+"case6_T2V.mp4", prompt: "T2V w/o MfM" },
+                    // Add any other videos in the directory
+                ];
+
+                // Create template with default settings
+                videoTemplate = createVideoTemplateTask({});
+
+                // Loop through the videos array and create HTML for each video
+                videos.forEach(video => {
+                    document.write(videoTemplate(video));
+                });
+            </script>
+        </div>
+
+
+    </section>
+
+
+
+    <script>
+        const containers = document.querySelectorAll('.container');
+        containers.forEach(container => {
+            let isDragging = true;
+            const slider = container.querySelector('.slider')
+            const media2 = container.querySelector('#media2')
+            container.addEventListener('mousedown', () => {
+                isDragging = true;
+            });
+            container.addEventListener('mouseup', () => {
+                isDragging = true;
+            });
+            container.addEventListener('mousemove', (event) => {
+                if (!isDragging) return;
+                const {clientX} = event;
+                const {left, width} = container.getBoundingClientRect();
+                let percentage = (clientX - left) / width * 150;
+                percentage = Math.max(0, Math.min(100, percentage));
+                media2.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+                slider.style.left = `${percentage}%`;
+                // console.info(slider.style.left);
+            });
+            slider.style.left = '50%';
+        });
+    </script>
+
+</body>
+</html>

@@ -907,12 +907,20 @@
                     } else {
                         promptHTML = `<div class="prompt">${video.prompt}</div>`;
                     }
-                    return `
-                        <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                    let load_text = 'Loading...';
+                    if (video.prompt === "placeholder") {
+                        load_text = `<div class="loading-placeholder"></div>`;
+                    } else {
+                        load_text = `
                             <div class="loading-placeholder">
                                 <div class="loading-text">Loading...</div>
                                 <div class="loading-icon">✨</div>
                             </div>
+                            `;
+                    }
+                    return `
+                        <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                            ${load_text}
                             <video autoplay playsinline muted loop 
                                 class="${settings.videoClass}"
                                 style="width: ${settings.videoWidth}; margin: 0 auto; display: block;"
@@ -1081,10 +1089,10 @@
                     { filename: path+"case3_T2V.mp4", prompt: "T2V w/o MfM" },
                     { filename: path+"case4_MfM.mp4", prompt: "T2V w/ MfM" },
                     { filename: path+"case5_MfM.mp4", prompt: "T2V w/ MfM" },
-                    { filename: path+"case6_MfM.mp4", prompt: "T2V w/ MfM" },
+                    { filename: path+"tmp.mp4", prompt: "placeholder" },
                     { filename: path+"case4_T2V.mp4", prompt: "T2V w/o MfM" },
                     { filename: path+"case5_T2V.mp4", prompt: "T2V w/o MfM" },
-                    { filename: path+"case6_T2V.mp4", prompt: "T2V w/o MfM" },
+                    { filename: path+"tmp.mp4", prompt: "placeholder" },
                     // Add any other videos in the directory
                 ];
 

@@ -643,6 +643,8 @@
         <button class="tab-button" data-section="video_2">&#128073;Click for I2V Generation Results</button>
         <button class="tab-button" data-section="video_3">&#128073;Click for Multi-Task Results</button>
         <button class="tab-button" data-section="video_4">&#128073;Click for Ablation Study Results</button>
+        <button class="tab-button" data-section="video_5">&#128073;Click for Failure Cases</button>
+        <button class="tab-button" data-section="video_6">&#128073;Click for Visual Results of More tasks</button>
     </div>
         
     <div id="video_1_container" class="section-container">
@@ -945,6 +947,183 @@
         </section>
     </div>
 
+    <div id="video_5_container" class="section-container">
+        <section id="video_5">
+            <div class="title">
+                Failure Cases
+            </div>
+
+            <div class="flex flex-dynamic">
+            </div>
+
+        </section>
+    </div>
+
+
+    <!-- Add this new section container after video_5_container -->
+    <div id="video_6_container" class="section-container">
+        <section id="video_6">
+            <div class="title">
+                Visual Results of More Tasks
+                <!-- Case Tab Navigation -->
+                <div class="case-tab-navigation">
+                    <!-- Video tabs -->
+                    <button class="case-tab-button active" data-section="video_task1">Video Extension</button>
+                    <button class="case-tab-button" data-section="video_task2">First-last-clip to video</button>
+                    <button class="case-tab-button" data-section="video_task3">Video Super-Resolution</button>
+                    <button class="case-tab-button" data-section="video_task4">Video Style Editing</button>
+                    <!-- Image tabs -->
+                    <button class="case-tab-button" data-section="image_task1">Text to Image</button>
+                    <button class="case-tab-button" data-section="image_task2">Image Inpainting</button>
+                    <button class="case-tab-button" data-section="image_task3">Image Outpainting</button>
+                    <button class="case-tab-button" data-section="image_task4">Image Super-Resolution</button>
+                    <button class="case-tab-button" data-section="image_task5">Image Colorization</button>
+                    <button class="case-tab-button" data-section="image_task6">Image Style Editing</button>
+                </div>
+            </div>
+            
+            <!-- Video Task 1 -->
+            <div id="video_task1_container" class="case-container active">
+                <div class="description">
+                    <h2><strong>Video Extension</strong></h2>
+                </div>
+                <div id="video_task1_videos" class="flex flex-dynamic">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Video Task 2 -->
+            <div id="video_task2_container" class="case-container">
+                <div class="description">
+                    <h2><strong>First-last-clip to video</strong></h2>
+                </div>
+                <div id="video_task2_videos" class="flex flex-dynamic">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Video Task 3 -->
+            <div id="video_task3_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Video Super-Resolution</strong></h2>
+                </div>
+                <div id="video_task3_videos" class="flex flex-dynamic">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Video Task 4 -->
+            <div id="video_task4_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Video Style Editing</strong></h2>
+                </div>
+                <div id="video_task4_videos" class="flex flex-dynamic">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Image Task 1 -->
+            <div id="image_task1_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Text to Image</strong></h2>
+                </div>
+                <div id="image_task1_images" class="flex flex-dynamic">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Image Task 2 -->
+            <div id="image_task2_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Image Inpainting</strong></h2>
+                </div>
+                <div id="image_task2_images" class="flex flex-dynamic">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Image Task 3 -->
+            <div id="image_task3_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Image Outpainting</strong></h2>
+                </div>
+                <div id="image_task3_images" class="flex flex-dynamic">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Image Task 4 -->
+            <div id="image_task4_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Image Super-Resolution</strong></h2>
+                </div>
+                <div id="image_task4_images" class="flex flex-dynamic">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Image Task 5 -->
+            <div id="image_task5_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Image Colorization</strong></h2>
+                </div>
+                <div id="image_task5_images" class="flex flex-dynamic">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Image Task 6 -->
+            <div id="image_task6_container" class="case-container">
+                <div class="description">
+                    <h2><strong>Image Style Editing</strong></h2>
+                </div>
+                <div id="image_task6_images" class="flex flex-dynamic">
+                    <!-- Images will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Define a template function for displaying images
+        function createImageTemplate(options = {}) {
+            // Default options
+            const defaults = {
+                imageWidth: '480px',
+                promptStyle: 'emphasized',
+            };
+            
+            // Merge provided options with defaults
+            const settings = {...defaults, ...options};
+            
+            // Return the template function that will be executed for each image
+            return function(image) {
+                // Determine prompt HTML based on style setting
+                let promptHTML = '';
+                if (settings.promptStyle === 'emphasized') {
+                    promptHTML = `<div class="video-prompt"><strong>${image.prompt}</strong></div>`;
+                } else {
+                    promptHTML = `<div class="video-prompt">${image.prompt}</div>`;
+                }
+                
+                return `
+                    <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                        <div class="loading-placeholder">
+                            <div class="loading-text">Loading...</div>
+                            <div class="loading-icon">✨</div>
+                        </div>
+                        <img 
+                            style="width: ${settings.imageWidth}; margin: 0 auto; display: block;"
+                            src="${image.filename}" 
+                            onload="this.style.display='block'; this.previousElementSibling.style.display='none';">
+                        </img>
+                        ${promptHTML}
+                    </div>
+                `;
+            };
+        }
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get all tab buttons and section containers
@@ -980,7 +1159,9 @@
                 'video_1': false,
                 'video_2': false,
                 'video_3': false,
-                'video_4': false
+                'video_4': false,
+                'video_5': false,
+                'video_6': false,
             };
             
             const loadedCases = {
@@ -1200,6 +1381,129 @@
                         { filename: "case5_T2V.mp4", prompt: "T2V w/o MfM -- A drone view of celebration with Christmas tree and fireworks, starry sky background" },
                         { filename: "tmp.mp4", prompt: "" }
                     ]
+                },
+                'video_5': {
+                    path: "./assets/videos/failure/",
+                    videos: [
+                        { filename: "case1.mp4", prompt: "A person is dunking basketball" },
+                        { filename: "case2.mp4", prompt: "A young man eat a hamburger" },
+                        { filename: "case3.mp4", prompt: "The bund Shanghai, in cyberpunk style" },
+                        { filename: "case4.mp4", prompt: "A confused panda in calculus class" },
+                        { filename: "case5.mp4", prompt: "A cat playing in park" },
+                        { filename: "case6.mp4", prompt: "Two people performing a sword fight in front of a forest" }
+                    ]
+                },
+                // Add to videoData object
+                'video_task1': {
+                    path: "./assets/videos/more_tasks/video_task1/",
+                    videos: [
+                        { filename: "MfM1.mp4", prompt: "Output 1" },
+                        { filename: "MfM2.mp4", prompt: "Output 2" },
+                        { filename: "MfM3.mp4", prompt: "Output 3" },
+                        { filename: "input1.mp4", prompt: "Input 1" },
+                        { filename: "input2.mp4", prompt: "Input 2" },
+                        { filename: "input3.mp4", prompt: "Input 3" },
+                    ]
+                },
+                'video_task2': {
+                    path: "./assets/videos/more_tasks/video_task2/",
+                    videos: [
+                        { filename: "output1.mp4", prompt: "Output 1" },
+                        { filename: "output2.mp4", prompt: "Output 2" },
+                        { filename: "output3.mp4", prompt: "Output 3" },
+                        { filename: "input1.mp4", prompt: "First clip condition 1" },
+                        { filename: "input2.mp4", prompt: "First clip condition 2" },
+                        { filename: "input3.mp4", prompt: "First clip condition 3" },
+                        { filename: "input4.mp4", prompt: "Last clip condition 1" },
+                        { filename: "input5.mp4", prompt: "Last clip condition 2" },
+                        { filename: "input6.mp4", prompt: "Last clip condition 3" },
+                        
+                    ]
+                },
+                'video_task3': {
+                    path: "./assets/videos/more_tasks/video_task3/",
+                    videos: [
+                        { filename: "output1.mp4", prompt: "Output 1" },
+                        { filename: "output2.mp4", prompt: "Output 2" },
+                        { filename: "output3.mp4", prompt: "Output 3" },
+                        { filename: "input1.mp4", prompt: "Input 1" },
+                        { filename: "input2.mp4", prompt: "Input 2" },
+                        { filename: "input3.mp4", prompt: "Input 3" },
+                    ]
+                },
+                'video_task4': {
+                    path: "./assets/videos/more_tasks/video_task4/",
+                    videos: [
+                        { filename: "output1.mp4", prompt: "Output 1" },
+                        { filename: "output2.mp4", prompt: "Output 2" },
+                        { filename: "output3.mp4", prompt: "Output 3" },
+                        { filename: "input1.mp4", prompt: "Input 1" },
+                        { filename: "input2.mp4", prompt: "Input 2" },
+                        { filename: "input3.mp4", prompt: "Input 3" },
+                    ]
+                },
+                'image_task1': {
+                    path: "./assets/videos/more_tasks/image_task1/",
+                    images: [
+                        { filename: "image1.jpg", prompt: "Text to Image" },
+                        { filename: "image2.jpg", prompt: "Text to Image" },
+                        { filename: "image3.jpg", prompt: "Text to Image" }
+                    ]
+                },
+                'image_task2': {
+                    path: "./assets/videos/more_tasks/image_task2/",
+                    images: [
+                        { filename: "output1.jpg", prompt: "Image Inpainting Output" },
+                        { filename: "output2.jpg", prompt: "Image Inpainting Output" },
+                        { filename: "output3.jpg", prompt: "Image Inpainting Output" },
+                        { filename: "input1.jpg", prompt: "Input" },
+                        { filename: "input2.jpg", prompt: "Input" },
+                        { filename: "input3.jpg", prompt: "Input" },
+                    ]
+                },
+                'image_task3': {
+                    path: "./assets/videos/more_tasks/image_task3/",
+                    images: [
+                        { filename: "output1.jpg", prompt: "Image Outpainting Output" },
+                        { filename: "output2.jpg", prompt: "Image Outpainting Output" },
+                        { filename: "output3.jpg", prompt: "Image Outpainting Output" },
+                        { filename: "input1.jpg", prompt: "Input" },
+                        { filename: "input2.jpg", prompt: "Input" },
+                        { filename: "input3.jpg", prompt: "Input" },
+                    ]
+                },
+                'image_task4': {
+                    path: "./assets/videos/more_tasks/image_task4/",
+                    images: [
+                        { filename: "output1.jpg", prompt: "Image SR Output" },
+                        { filename: "output2.jpg", prompt: "Image SR Output" },
+                        { filename: "output3.jpg", prompt: "Image SR Output" },
+                        { filename: "input1.jpg", prompt: "Input" },
+                        { filename: "input2.jpg", prompt: "Input" },
+                        { filename: "input3.jpg", prompt: "Input" },
+                    ]
+                },
+                'image_task5': {
+                    path: "./assets/videos/more_tasks/image_task5/",
+                    images: [
+                        { filename: "output1.jpg", prompt: "Image Colorization Output" },
+                        { filename: "output2.jpg", prompt: "Image Colorization Output" },
+                        { filename: "output3.jpg", prompt: "Image Colorization Output" },
+                        { filename: "input1.jpg", prompt: "Input" },
+                        { filename: "input2.jpg", prompt: "Input" },
+                        { filename: "input3.jpg", prompt: "Input" },
+                    ]
+                },
+                'image_task6': {
+                    path: "./assets/videos/more_tasks/image_task6/",
+                    images: [
+                        { filename: "output1.jpg", prompt: "Image Editing Output" },
+                        { filename: "output2.jpg", prompt: "Image Editing Output" },
+                        { filename: "output3.jpg", prompt: "Image Editing Output" },
+                        { filename: "input1.jpg", prompt: "Input" },
+                        { filename: "input2.jpg", prompt: "Input" },
+                        { filename: "input3.jpg", prompt: "Input" },
+                    ]
                 }
             };
 
@@ -1254,6 +1558,18 @@
                         } else if (targetSectionId === 'video_4') {
                             // Ablation study is a single case
                             loadSectionVideos('video_4');
+                        } else if (targetSectionId === 'video_5') {
+                            // Failure cases
+                            loadSectionVideos('video_5');
+                        } else if (targetSectionId === 'video_6') {
+                            // For More Tasks, load the active case
+                            const activeCase = targetContainer.querySelector('.case-container.active');
+                            if (activeCase) {
+                                const caseId = activeCase.id.replace('_container', '');
+                                loadCaseVideos(caseId);
+                            } else {
+                                loadCaseVideos('video_task1'); // Default case
+                            }
                         }
                         
                         loadedSections[targetSectionId] = true;
@@ -1322,20 +1638,45 @@
                     templateFunction = createVideoTemplate({});
                 } else if (caseId.startsWith('i2v_')) {
                     templateFunction = createVideoTemplateI2V({});
+                } else if (caseId.startsWith('image_task')) {
+                    templateFunction = createImageTemplate({});
                 } else {
                     templateFunction = createVideoTemplateTask({});
                 }
                 
+                // Create and append video/image elements
+                if (caseData.videos) {
+                    caseData.videos.forEach(video => {
+                        const videoElement = document.createElement('div');
+                        const fullVideoData = {
+                            filename: caseData.path + video.filename,
+                            prompt: video.prompt
+                        };
+                        videoElement.innerHTML = templateFunction(fullVideoData);
+                        container.appendChild(videoElement);
+                    });
+                } else if (caseData.images) {
+                    caseData.images.forEach(image => {
+                        const imageElement = document.createElement('div');
+                        const fullImageData = {
+                            filename: caseData.path + image.filename,
+                            prompt: image.prompt
+                        };
+                        imageElement.innerHTML = templateFunction(fullImageData);
+                        container.appendChild(imageElement);
+                    });
+                }
+
                 // Create and append video elements
-                caseData.videos.forEach(video => {
-                    const videoElement = document.createElement('div');
-                    const fullVideoData = {
-                        filename: caseData.path + video.filename,
-                        prompt: video.prompt
-                    };
-                    videoElement.innerHTML = templateFunction(fullVideoData);
-                    container.appendChild(videoElement);
-                });
+                // caseData.videos.forEach(video => {
+                //     const videoElement = document.createElement('div');
+                //     const fullVideoData = {
+                //         filename: caseData.path + video.filename,
+                //         prompt: video.prompt
+                //     };
+                //     videoElement.innerHTML = templateFunction(fullVideoData);
+                //     container.appendChild(videoElement);
+                // });
                 
                 loadedCases[caseId] = true;
             }
@@ -1385,6 +1726,8 @@
                     loadedCases['vinp'] = true;
                 } else if (initialSectionId === 'video_4') {
                     loadSectionVideos('video_4');
+                } else if (initialSectionId === 'video_5') {
+                    loadSectionVideos('video_5');
                 }
                 loadedSections[initialSectionId] = true;
             }

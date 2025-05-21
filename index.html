@@ -577,6 +577,17 @@
             display: block;
         }
 
+        .video-prompt {
+            width: 100%;
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 8px 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -628,25 +639,26 @@
         
     <!-- Tab Navigation -->
     <div class="tab-navigation">
-        <button class="tab-button active" data-section="video_1">T2V Generation</button>
-        <button class="tab-button" data-section="video_2">I2V Generation</button>
-        <button class="tab-button" data-section="video_3">Multi-Task</button>
-        <button class="tab-button" data-section="video_4">Ablation Study</button>
+        <button class="tab-button" data-section="video_1">&#128073;Click for T2V Generation Results</button>
+        <button class="tab-button" data-section="video_2">&#128073;Click for I2V Generation Results</button>
+        <button class="tab-button" data-section="video_3">&#128073;Click for Multi-Task Results</button>
+        <button class="tab-button" data-section="video_4">&#128073;Click for Ablation Study Results</button>
     </div>
         
-    <div id="video_1_container" class="section-container active">
+    <div id="video_1_container" class="section-container">
         <section id="video_1">
             <div class="title">
-                Visual comparision of MfM on T2V generation tasks
+                Visual comparisions on T2V generation tasks
+                <div class="case-tab-navigation">
+                    <button class="case-tab-button active" data-section="t2v_case1">T2V-Case1: Beach Scene</button>
+                    <button class="case-tab-button" data-section="t2v_case2">T2V-Case2: Snowstorm</button>
+                    <button class="case-tab-button" data-section="t2v_case3">T2V-Case3: Koala Piano</button>
+                    <button class="case-tab-button" data-section="t2v_case4">T2V-Case4: Bicycle</button>
+                </div>
             </div>
 
             <!-- Case Tab Navigation -->
-            <div class="case-tab-navigation">
-                <button class="case-tab-button active" data-section="t2v_case1">T2V-Case1: Beach Scene</button>
-                <button class="case-tab-button" data-section="t2v_case2">T2V-Case2: Snowstorm</button>
-                <button class="case-tab-button" data-section="t2v_case3">T2V-Case3: Koala Piano</button>
-                <button class="case-tab-button" data-section="t2v_case4">T2V-Case4: Bicycle</button>
-            </div>
+            
 
             <!-- Case 1 -->
             <div id="t2v_case1_container" class="case-container active">
@@ -670,9 +682,9 @@
                             // Determine prompt HTML based on style setting
                             let promptHTML = '';
                             if (settings.promptStyle === 'emphasized') {
-                                promptHTML = `<div class="prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
+                                promptHTML = `<div class="video-prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
                             } else {
-                                promptHTML = `<div class="prompt">${video.prompt}</div>`;
+                                promptHTML = `<div class="video-prompt">${video.prompt}</div>`;
                             }
                             return `
                                 <div class="prompt-wrap full-screen-wrap" style="position: relative;">
@@ -692,31 +704,7 @@
                         };
                     }
                 </script>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/t2v_case1_oil_paint/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
-                            { filename: path+"sora.mp4", prompt: "Sora" },
-                            { filename: path+"Gen3.mp4", prompt: "Gen-3" },
-                            { filename: path+"pika.mp4", prompt: "PikaLabs" },
-                            { filename: path+"ltx.mp4", prompt: "LTX-Video" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
-                            { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
-                            // Add any other videos in the directory
-                        ];
-                        
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplate({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="t2v_case1_videos" class="flex flex-dynamic">
                 </div>
             </div>
             
@@ -725,31 +713,7 @@
                 <div class="description">
                 <h2><strong>Case 2: A person walking in the snowstorm.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/t2v_case2_walk_in_snow/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
-                            { filename: path+"sora.mp4", prompt: "Sora" },
-                            { filename: path+"Gen3.mp4", prompt: "Gen-3" },
-                            { filename: path+"pika.mp4", prompt: "PikaLabs" },
-                            { filename: path+"ltx.mp4", prompt: "LTX-Video" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
-                            { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplate({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="t2v_case2_videos" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -758,31 +722,7 @@
                 <div class="description">
                 <h2><strong>Case 3: A koala bear playing piano in the forest.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/t2v_case3_play_piano/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
-                            { filename: path+"sora.mp4", prompt: "Sora" },
-                            { filename: path+"Gen3.mp4", prompt: "Gen-3" },
-                            { filename: path+"pika.mp4", prompt: "PikaLabs" },
-                            { filename: path+"ltx.mp4", prompt: "LTX-Video" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
-                            { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplate({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="t2v_case3_videos" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -791,31 +731,7 @@
                 <div class="description">
                 <h2><strong>Case 4: A bicycle slowing down to stop.</strong></h2>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/t2v_case4_bike/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx2.1" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan" },
-                            { filename: path+"sora.mp4", prompt: "Sora" },
-                            { filename: path+"Gen3.mp4", prompt: "Gen-3" },
-                            { filename: path+"pika.mp4", prompt: "PikaLabs" },
-                            { filename: path+"ltx.mp4", prompt: "LTX-Video" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo" },
-                            { filename: path+"easyanimate.mp4", prompt: "Easyanimate" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplate({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="t2v_case4_videos" class="flex flex-dynamic">
                 </div>
             </div>
         </section>
@@ -824,7 +740,14 @@
     <div id="video_2_container" class="section-container">
         <section id="video_2">
             <div class="title">
-                Visual comparision of MfM on I2V generation tasks
+                Visual comparisions on I2V generation tasks
+                <!-- Case Tab Navigation -->
+                <div class="case-tab-navigation">
+                    <button class="case-tab-button active" data-section="i2v_case1">I2V-Case1: Turtle</button>
+                    <button class="case-tab-button" data-section="i2v_case2">I2V-Case2: Dog and soccer</button>
+                    <button class="case-tab-button" data-section="i2v_case3">I2V-Case3: Boat</button>
+                    <button class="case-tab-button" data-section="i2v_case4">I2V-Case4: Horse</button>
+                </div>
             </div>
             
             <script>
@@ -844,9 +767,9 @@
                         // Determine prompt HTML based on style setting
                         let promptHTML = '';
                         if (settings.promptStyle === 'emphasized') {
-                            promptHTML = `<div class="prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
+                            promptHTML = `<div class="video-prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
                         } else {
-                            promptHTML = `<div class="prompt">${video.prompt}</div>`;
+                            promptHTML = `<div class="video-prompt">${video.prompt}</div>`;
                         }
                         return `
                             <div class="prompt-wrap full-screen-wrap" style="position: relative;">
@@ -867,44 +790,14 @@
                 }
             </script>
 
-            <!-- Case Tab Navigation -->
-            <div class="case-tab-navigation">
-                <button class="case-tab-button active" data-section="i2v_case1">I2V-Case1: Turtle</button>
-                <button class="case-tab-button" data-section="i2v_case2">I2V-Case2: Dog and soccer</button>
-                <button class="case-tab-button" data-section="i2v_case3">I2V-Case3: Boat</button>
-                <button class="case-tab-button" data-section="i2v_case4">I2V-Case4: Horse</button>
-            </div>
+            
             
             <!-- Case 1 -->
             <div id="i2v_case1_container" class="case-container active">
                 <div class="description">
                     <h2><strong>Case 1: a sea turtle swimming in the ocean under the water.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/I2v_case1_turtle/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                            { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                            { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                            { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                            { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                            { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateI2V({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="i2v_case1_container" class="flex flex-dynamic">
                 </div>
             </div>
             
@@ -913,31 +806,7 @@
                 <div class="description">
                     <h2><strong>Case 2: a dog carrying a soccer ball in its mouth.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/i2v_case2_dog/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                            { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                            { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                            { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                            { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                            { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateI2V({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="i2v_case2_container" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -946,31 +815,7 @@
                 <div class="description">
                     <h2><strong>Case 3: a blue fishing boat is navigating in the ocean next to a cruise ship.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/i2v_case3_boat/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                            { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                            { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                            { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                            { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                            { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateI2V({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="i2v_case3_container" class="flex flex-dynamic">
                 </div>
             </div>
             
@@ -979,31 +824,7 @@
                 <div class="description">
                     <h2><strong>Case 4: a couple of horses are running in the dirt.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/i2v_case4_horse/";
-                        videos = [
-                            { filename: path+"MfM.mp4", prompt: "MfM" },
-                            { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                            { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                            { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                            { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                            { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                            { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                            { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                            { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateI2V({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="i2v_case4_container" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -1013,7 +834,14 @@
     <div id="video_3_container" class="section-container">
         <section id="video_3">
             <div class="title">
-                Visual comparision of MfM on Multi-Task
+                Visual comparisions on Multi-Task Generation and Manipulation
+                <!-- Case Tab Navigation -->
+                <div class="case-tab-navigation">
+                    <button class="case-tab-button active" data-section="vinp">Video Inpainting</button>
+                    <button class="case-tab-button" data-section="voutp">Video Outpainting</button>
+                    <button class="case-tab-button" data-section="vcolor">Video Colorization</button>
+                    <button class="case-tab-button" data-section="flf2v">First-last-frame to Video</button>
+                </div>
             </div>
 
             <script>
@@ -1033,12 +861,12 @@
                         // Determine prompt HTML based on style setting
                         let promptHTML = '';
                         if (settings.promptStyle === 'emphasized') {
-                            promptHTML = `<div class="prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
+                            promptHTML = `<div class="video-prompt"><h2 font-size: 32px; ><strong>${video.prompt}</strong></h2></div>`;
                         } else {
-                            promptHTML = `<div class="prompt">${video.prompt}</div>`;
+                            promptHTML = `<div class="video-prompt">${video.prompt}</div>`;
                         }
                         let load_text = 'Loading...';
-                        if (video.prompt === "placeholder") {
+                        if (video.prompt === "placeholder" || video.prompt === "") {
                             load_text = `<div class="loading-placeholder"></div>`;
                         } else {
                             load_text = `
@@ -1064,47 +892,14 @@
                 }
             </script>
 
-            <!-- Case Tab Navigation -->
-            <div class="case-tab-navigation">
-                <button class="case-tab-button active" data-section="vinp">Video Inpainting</button>
-                <button class="case-tab-button" data-section="voutp">Video Outpainting</button>
-                <button class="case-tab-button" data-section="vcolor">Video Colorization</button>
-                <button class="case-tab-button" data-section="flf2v">First-last-frame to Video</button>
-            </div>
+            
             
             <!-- Case vinp -->
             <div id="vinp_container" class="case-container active">
                 <div class="description">
                     <h2><strong>Video Inpainting.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/VINP/";
-                        videos = [
-                            { filename: path+"case1.mp4", prompt: "Input" },
-                            { filename: path+"case3.mp4", prompt: "Input" },
-                            { filename: path+"case5.mp4", prompt: "Input" },
-                            { filename: path+"MfM_1.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_3.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_5.mp4", prompt: "MfM" },
-                            { filename: path+"VACE_1.mp4", prompt: "VACE" },
-                            { filename: path+"VACE_3.mp4", prompt: "VACE" },
-                            { filename: path+"VACE_5.mp4", prompt: "VACE" },
-                            { filename: path+"propainter_1.mp4", prompt: "Propainter" },
-                            { filename: path+"propainter_3.mp4", prompt: "Propainter" },
-                            { filename: path+"propainter_5.mp4", prompt: "Propainter" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateTask({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="vinp_videos" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -1113,37 +908,7 @@
                 <div class="description">
                     <h2><strong>Video Outpainting.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/VOUTP/";
-                        videos = [
-                            { filename: path+"case_2.mp4", prompt: "Input" },
-                            { filename: path+"case_4.mp4", prompt: "Input" },
-                            { filename: path+"case_5.mp4", prompt: "Input" },
-                            { filename: path+"MfM_2.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_4.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_5.mp4", prompt: "MfM" },
-                            { filename: path+"VACE_2.mp4", prompt: "VACE" },
-                            { filename: path+"VACE_4.mp4", prompt: "VACE" },
-                            { filename: path+"VACE_5.mp4", prompt: "VACE" },
-                            { filename: path+"FYC_2.mp4", prompt: "Follow-your-canvas" },
-                            { filename: path+"FYC_4.mp4", prompt: "Follow-your-canvas" },
-                            { filename: path+"FYC_5.mp4", prompt: "Follow-your-canvas" },
-                            { filename: path+"MMD_2.mp4", prompt: "M3DDM" },
-                            { filename: path+"MMD_4.mp4", prompt: "M3DDM" },
-                            { filename: path+"MMD_5.mp4", prompt: "M3DDM" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateTask({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="voutp_videos" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -1152,34 +917,7 @@
                 <div class="description">
                     <h2><strong>Video Colorization.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/VCOLOR/";
-                        videos = [
-                            { filename: path+"case_2.mp4", prompt: "Input" },
-                            { filename: path+"case_4.mp4", prompt: "Input" },
-                            { filename: path+"case_5.mp4", prompt: "Input" },
-                            { filename: path+"MfM_2.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_4.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_5.mp4", prompt: "MfM" },
-                            { filename: path+"colorm_2.mp4", prompt: "colormnet" },
-                            { filename: path+"colorm_4.mp4", prompt: "colormnet" },
-                            { filename: path+"colorm_5.mp4", prompt: "colormnet" },
-                            { filename: path+"TCVC_2.mp4", prompt: "TCVC" },
-                            { filename: path+"TCVC_4.mp4", prompt: "TCVC" },
-                            { filename: path+"TCVC_5.mp4", prompt: "TCVC" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateTask({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="vcolor_videos" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -1188,31 +926,7 @@
                 <div class="description">
                     <h2><strong>First-last-frame to Video.</strong>
                 </div>
-                <div class="flex flex-dynamic">
-                    <script>
-                        // Define the video sources and their prompt texts
-                        path = "./assets/videos/FLF2V/";
-                        videos = [
-                            { filename: path+"MfM_1.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_2.mp4", prompt: "MfM" },
-                            { filename: path+"MfM_3.mp4", prompt: "MfM" },
-                            { filename: path+"wanx_1.mp4", prompt: "Wanx-FLF2V" },
-                            { filename: path+"wanx_2.mp4", prompt: "Wanx-FLF2V" },
-                            { filename: path+"wanx_3.mp4", prompt: "Wanx-FLF2V" },
-                            { filename: path+"hunyuan_1.mp4", prompt: "Hunyuan-LoRA" },
-                            { filename: path+"hunyuan_2.mp4", prompt: "Hunyuan-LoRA" },
-                            { filename: path+"hunyuan_3.mp4", prompt: "Hunyuan-LoRA" },
-                            // Add any other videos in the directory
-                        ];
-
-                        // Create template with default settings
-                        videoTemplate = createVideoTemplateTask({});
-
-                        // Loop through the videos array and create HTML for each video
-                        videos.forEach(video => {
-                            document.write(videoTemplate(video));
-                        });
-                    </script>
+                <div id="flf2v_videos" class="flex flex-dynamic">
                 </div>
             </div>
 
@@ -1222,42 +936,11 @@
     <div id="video_4_container" class="section-container">
         <section id="video_4">
             <div class="title">
-                Visual comparison of ablation study
+                Visual comparisons of ablation study
             </div>
 
-            <!-- <div class="description">
-                <h2><strong>Video Inpainting.</strong>
-            </div> -->
             <div class="flex flex-dynamic">
-                <script>
-                    // Define the video sources and their prompt texts
-                    path = "./assets/videos/ablation/";
-                    videos = [
-                        { filename: path+"case1_MfM.mp4", prompt: "T2V w/ MfM -- a car accelerating to gain speed" },
-                        { filename: path+"case2_MfM.mp4", prompt: "T2V w/ MfM -- a bicycle gliding through a snowy field" },
-                        { filename: path+"case3_MfM.mp4", prompt: "T2V w/ MfM -- a train speeding down the tracks" },
-                        { filename: path+"case1_T2V.mp4", prompt: "T2V w/o MfM -- a car accelerating to gain speed" },
-                        { filename: path+"case2_T2V.mp4", prompt: "T2V w/o MfM -- a bicycle gliding through a snowy field" },
-                        { filename: path+"case3_T2V.mp4", prompt: "T2V w/o MfM -- a train speeding down the tracks" },
-                        { filename: path+"case4_MfM.mp4", prompt: "T2V w/ MfM -- time lapse of sunrise on mars" },
-                        { filename: path+"case5_MfM.mp4", prompt: "T2V w/ MfM -- A drone view of celebration with Christmas tree and fireworks, starry sky background" },
-                        { filename: path+"tmp.mp4", prompt: "placeholder" },
-                        { filename: path+"case4_T2V.mp4", prompt: "T2V w/o MfM -- time lapse of sunrise on mars" },
-                        { filename: path+"case5_T2V.mp4", prompt: "T2V w/o MfM -- A drone view of celebration with Christmas tree and fireworks, starry sky background" },
-                        { filename: path+"tmp.mp4", prompt: "placeholder" },
-                        // Add any other videos in the directory
-                    ];
-
-                    // Create template with default settings
-                    videoTemplate = createVideoTemplateTask({});
-
-                    // Loop through the videos array and create HTML for each video
-                    videos.forEach(video => {
-                        document.write(videoTemplate(video));
-                    });
-                </script>
             </div>
-
 
         </section>
     </div>
@@ -1292,7 +975,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Store loaded state for each case
+            // Store loaded state for each section and case
+            const loadedSections = {
+                'video_1': false,
+                'video_2': false,
+                'video_3': false,
+                'video_4': false
+            };
+            
             const loadedCases = {
                 't2v_case1': false,
                 't2v_case2': false,
@@ -1301,10 +991,14 @@
                 'i2v_case1': false,
                 'i2v_case2': false,
                 'i2v_case3': false,
-                'i2v_case4': false
+                'i2v_case4': false,
+                'vinp': false,
+                'voutp': false,
+                'vcolor': false,
+                'flf2v': false
             };
 
-            // Define video data for each case
+            // Define all video data centrally
             const videoData = {
                 't2v_case1': {
                     path: "./assets/videos/t2v_case1_oil_paint/",
@@ -1362,7 +1056,6 @@
                         { filename: "easyanimate.mp4", prompt: "Easyanimate" }
                     ]
                 },
-                // Define similar structures for i2v cases...
                 'i2v_case1': {
                     path: "./assets/videos/I2v_case1_turtle/",
                     videos: [
@@ -1380,49 +1073,130 @@
                 'i2v_case2': {
                     path: "./assets/videos/i2v_case2_dog/",
                     videos: [
-                        { filename: path+"MfM.mp4", prompt: "MfM" },
-                        { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                        { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                        { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                        { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                        { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                        { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                        { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                        { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                        // Add any other videos in the directory
+                        { filename: "MfM.mp4", prompt: "MfM" },
+                        { filename: "wanx.mp4", prompt: "Wanx-I2V" },
+                        { filename: "hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                        { filename: "stepvideo.mp4", prompt: "StepVideo-I2V" },
+                        { filename: "magi-1.mp4", prompt: "Magi-1" },
+                        { filename: "cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                        { filename: "dyncrafter.mp4", prompt: "DynCrafter" },
+                        { filename: "vidcrafter.mp4", prompt: "VidCrafter" },
+                        { filename: "consist.mp4", prompt: "ConsistI2V" }
                     ]
                 },
                 'i2v_case3': {
                     path: "./assets/videos/i2v_case3_boat/",
                     videos: [
-                        { filename: path+"MfM.mp4", prompt: "MfM" },
-                        { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                        { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                        { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                        { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                        { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                        { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                        { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                        { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                        // Add any other videos in the directory
+                        { filename: "MfM.mp4", prompt: "MfM" },
+                        { filename: "wanx.mp4", prompt: "Wanx-I2V" },
+                        { filename: "hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                        { filename: "stepvideo.mp4", prompt: "StepVideo-I2V" },
+                        { filename: "magi-1.mp4", prompt: "Magi-1" },
+                        { filename: "cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                        { filename: "dyncrafter.mp4", prompt: "DynCrafter" },
+                        { filename: "vidcrafter.mp4", prompt: "VidCrafter" },
+                        { filename: "consist.mp4", prompt: "ConsistI2V" }
                     ]
                 },
                 'i2v_case4': {
                     path: "./assets/videos/i2v_case4_horse/",
                     videos: [
-                        { filename: path+"MfM.mp4", prompt: "MfM" },
-                        { filename: path+"wanx.mp4", prompt: "Wanx-I2V" },
-                        { filename: path+"hunyuan.mp4", prompt: "Hunyuan-I2V" },
-                        { filename: path+"stepvideo.mp4", prompt: "StepVideo-I2V" },
-                        { filename: path+"magi-1.mp4", prompt: "Magi-1" },
-                        { filename: path+"cogvideo.mp4", prompt: "Cogvideo-I2V" },
-                        { filename: path+"dyncrafter.mp4", prompt: "DynCrafter" },
-                        { filename: path+"vidcrafter.mp4", prompt: "VidCrafter" },
-                        { filename: path+"consist.mp4", prompt: "ConsistI2V" },
-                        // Add any other videos in the directory
+                        { filename: "MfM.mp4", prompt: "MfM" },
+                        { filename: "wanx.mp4", prompt: "Wanx-I2V" },
+                        { filename: "hunyuan.mp4", prompt: "Hunyuan-I2V" },
+                        { filename: "stepvideo.mp4", prompt: "StepVideo-I2V" },
+                        { filename: "magi-1.mp4", prompt: "Magi-1" },
+                        { filename: "cogvideo.mp4", prompt: "Cogvideo-I2V" },
+                        { filename: "dyncrafter.mp4", prompt: "DynCrafter" },
+                        { filename: "vidcrafter.mp4", prompt: "VidCrafter" },
+                        { filename: "consist.mp4", prompt: "ConsistI2V" }
                     ]
                 },
-                // Add other i2v cases here...
+                'vinp': {
+                    path: "./assets/videos/VINP/",
+                    videos: [
+                        { filename: "case1.mp4", prompt: "Input" },
+                        { filename: "case3.mp4", prompt: "Input" },
+                        { filename: "case5.mp4", prompt: "Input" },
+                        { filename: "MfM_1.mp4", prompt: "MfM" },
+                        { filename: "MfM_3.mp4", prompt: "MfM" },
+                        { filename: "MfM_5.mp4", prompt: "MfM" },
+                        { filename: "VACE_1.mp4", prompt: "VACE" },
+                        { filename: "VACE_3.mp4", prompt: "VACE" },
+                        { filename: "VACE_5.mp4", prompt: "VACE" },
+                        { filename: "propainter_1.mp4", prompt: "Propainter" },
+                        { filename: "propainter_3.mp4", prompt: "Propainter" },
+                        { filename: "propainter_5.mp4", prompt: "Propainter" }
+                    ]
+                },
+                'voutp': {
+                    path: "./assets/videos/VOUTP/",
+                    videos: [
+                        { filename: "case_2.mp4", prompt: "Input" },
+                        { filename: "case_4.mp4", prompt: "Input" },
+                        { filename: "case_5.mp4", prompt: "Input" },
+                        { filename: "MfM_2.mp4", prompt: "MfM" },
+                        { filename: "MfM_4.mp4", prompt: "MfM" },
+                        { filename: "MfM_5.mp4", prompt: "MfM" },
+                        { filename: "VACE_2.mp4", prompt: "VACE" },
+                        { filename: "VACE_4.mp4", prompt: "VACE" },
+                        { filename: "VACE_5.mp4", prompt: "VACE" },
+                        { filename: "FYC_2.mp4", prompt: "Follow-your-canvas" },
+                        { filename: "FYC_4.mp4", prompt: "Follow-your-canvas" },
+                        { filename: "FYC_5.mp4", prompt: "Follow-your-canvas" },
+                        { filename: "MMD_2.mp4", prompt: "M3DDM" },
+                        { filename: "MMD_4.mp4", prompt: "M3DDM" },
+                        { filename: "MMD_5.mp4", prompt: "M3DDM" }
+                    ]
+                },
+                'vcolor': {
+                    path: "./assets/videos/VCOLOR/",
+                    videos: [
+                        { filename: "case_2.mp4", prompt: "Input" },
+                        { filename: "case_4.mp4", prompt: "Input" },
+                        { filename: "case_5.mp4", prompt: "Input" },
+                        { filename: "MfM_2.mp4", prompt: "MfM" },
+                        { filename: "MfM_4.mp4", prompt: "MfM" },
+                        { filename: "MfM_5.mp4", prompt: "MfM" },
+                        { filename: "colorm_2.mp4", prompt: "colormnet" },
+                        { filename: "colorm_4.mp4", prompt: "colormnet" },
+                        { filename: "colorm_5.mp4", prompt: "colormnet" },
+                        { filename: "TCVC_2.mp4", prompt: "TCVC" },
+                        { filename: "TCVC_4.mp4", prompt: "TCVC" },
+                        { filename: "TCVC_5.mp4", prompt: "TCVC" }
+                    ]
+                },
+                'flf2v': {
+                    path: "./assets/videos/FLF2V/",
+                    videos: [
+                        { filename: "MfM_1.mp4", prompt: "MfM" },
+                        { filename: "MfM_2.mp4", prompt: "MfM" },
+                        { filename: "MfM_3.mp4", prompt: "MfM" },
+                        { filename: "wanx_1.mp4", prompt: "Wanx-FLF2V" },
+                        { filename: "wanx_2.mp4", prompt: "Wanx-FLF2V" },
+                        { filename: "wanx_3.mp4", prompt: "Wanx-FLF2V" },
+                        { filename: "hunyuan_1.mp4", prompt: "Hunyuan-LoRA" },
+                        { filename: "hunyuan_2.mp4", prompt: "Hunyuan-LoRA" },
+                        { filename: "hunyuan_3.mp4", prompt: "Hunyuan-LoRA" }
+                    ]
+                },
+                'video_4': {
+                    path: "./assets/videos/ablation/",
+                    videos: [
+                        { filename: "case1_MfM.mp4", prompt: "T2V w/ MfM -- a car accelerating to gain speed" },
+                        { filename: "case2_MfM.mp4", prompt: "T2V w/ MfM -- a bicycle gliding through a snowy field" },
+                        { filename: "case3_MfM.mp4", prompt: "T2V w/ MfM -- a train speeding down the tracks" },
+                        { filename: "case1_T2V.mp4", prompt: "T2V w/o MfM -- a car accelerating to gain speed" },
+                        { filename: "case2_T2V.mp4", prompt: "T2V w/o MfM -- a bicycle gliding through a snowy field" },
+                        { filename: "case3_T2V.mp4", prompt: "T2V w/o MfM -- a train speeding down the tracks" },
+                        { filename: "case4_MfM.mp4", prompt: "T2V w/ MfM -- time lapse of sunrise on mars" },
+                        { filename: "case5_MfM.mp4", prompt: "T2V w/ MfM -- A drone view of celebration with Christmas tree and fireworks, starry sky background" },
+                        { filename: "tmp.mp4", prompt: "" },
+                        { filename: "case4_T2V.mp4", prompt: "T2V w/o MfM -- time lapse of sunrise on mars" },
+                        { filename: "case5_T2V.mp4", prompt: "T2V w/o MfM -- A drone view of celebration with Christmas tree and fireworks, starry sky background" },
+                        { filename: "tmp.mp4", prompt: "" }
+                    ]
+                }
             };
 
             // Main tab functionality
@@ -1433,64 +1207,110 @@
                 button.addEventListener('click', function() {
                     const targetSectionId = this.getAttribute('data-section');
                     
+                    // Update active tab buttons
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
+                    // Update visible sections
                     sectionContainers.forEach(container => {
                         container.classList.remove('active');
                     });
+                    const targetContainer = document.getElementById(targetSectionId + '_container');
+                    targetContainer.classList.add('active');
                     
-                    document.getElementById(targetSectionId + '_container').classList.add('active');
-                    
-                    // If this is the first time loading the tab, load the first case
-                    if (targetSectionId === 'video_1' && !loadedCases['t2v_case1']) {
-                        loadCaseVideos('t2v_case1');
-                    }
-                    if (targetSectionId === 'video_2' && !loadedCases['i2v_case1']) {
-                        loadCaseVideos('i2v_case1');
+                    // Load videos for this section if not already loaded
+                    if (!loadedSections[targetSectionId]) {
+                        if (targetSectionId === 'video_1') {
+                            // For T2V, load the active case
+                            const activeCase = targetContainer.querySelector('.case-container.active');
+                            if (activeCase) {
+                                const caseId = activeCase.id.replace('_container', '');
+                                loadCaseVideos(caseId);
+                            } else {
+                                loadCaseVideos('t2v_case1'); // Default case
+                            }
+                        } else if (targetSectionId === 'video_2') {
+                            // For I2V, load the active case
+                            const activeCase = targetContainer.querySelector('.case-container.active');
+                            if (activeCase) {
+                                const caseId = activeCase.id.replace('_container', '');
+                                loadCaseVideos(caseId);
+                            } else {
+                                loadCaseVideos('i2v_case1'); // Default case
+                            }
+                        } else if (targetSectionId === 'video_3') {
+                            // For Multi-Task, load the active case
+                            const activeCase = targetContainer.querySelector('.case-container.active');
+                            if (activeCase) {
+                                const caseId = activeCase.id.replace('_container', '');
+                                loadCaseVideos(caseId);
+                            } else {
+                                loadCaseVideos('vinp'); // Default case
+                            }
+                        } else if (targetSectionId === 'video_4') {
+                            // Ablation study is a single case
+                            loadSectionVideos('video_4');
+                        }
+                        
+                        loadedSections[targetSectionId] = true;
                     }
                 });
             });
             
             // Case sub-tab functionality
             const caseTabButtons = document.querySelectorAll('.case-tab-button');
-            const caseContainers = document.querySelectorAll('.case-container');
             
             caseTabButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const targetCaseId = this.getAttribute('data-section');
-                    const parentSection = this.closest('section').id;
+                    const parentSection = this.closest('section');
                     
                     // Update active buttons for this section only
-                    const sectionCaseButtons = this.closest('section').querySelectorAll('.case-tab-button');
+                    const sectionCaseButtons = parentSection.querySelectorAll('.case-tab-button');
                     sectionCaseButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
                     // Hide all case containers in this section
-                    const sectionCaseContainers = this.closest('section').querySelectorAll('.case-container');
+                    const sectionCaseContainers = parentSection.querySelectorAll('.case-container');
                     sectionCaseContainers.forEach(container => {
                         container.classList.remove('active');
                     });
                     
                     // Show the selected case container
-                    document.getElementById(targetCaseId + '_container').classList.add('active');
+                    const targetContainer = document.getElementById(targetCaseId + '_container');
+                    targetContainer.classList.add('active');
                     
                     // Load videos for this case if not already loaded
-                    loadCaseVideos(targetCaseId);
+                    if (!loadedCases[targetCaseId]) {
+                        loadCaseVideos(targetCaseId);
+                        loadedCases[targetCaseId] = true;
+                    }
                 });
             });
             
-            // Function to load videos for a specific case
+            // Function to load case-specific videos
             function loadCaseVideos(caseId) {
-                if (loadedCases[caseId]) return; // Skip if already loaded
-                
-                const videosContainer = document.getElementById(caseId + '_videos');
                 const caseData = videoData[caseId];
+                if (!caseData) return;
                 
-                if (!videosContainer || !caseData) return;
+                // Find the container to insert videos into
+                let container;
+                
+                // First try to find a specific videos container
+                container = document.getElementById(caseId + '_videos');
+                
+                // If not found, look for the flex-dynamic container within the case container
+                if (!container) {
+                    const caseContainer = document.getElementById(caseId + '_container');
+                    if (caseContainer) {
+                        container = caseContainer.querySelector('.flex.flex-dynamic');
+                    }
+                }
+                
+                if (!container) return;
                 
                 // Clear any existing content
-                videosContainer.innerHTML = '';
+                container.innerHTML = '';
                 
                 // Determine which template function to use based on case type
                 let templateFunction;
@@ -1502,21 +1322,68 @@
                     templateFunction = createVideoTemplateTask({});
                 }
                 
-                // Create HTML for each video
+                // Create and append video elements
                 caseData.videos.forEach(video => {
-                    const fullVideo = {
+                    const videoElement = document.createElement('div');
+                    const fullVideoData = {
                         filename: caseData.path + video.filename,
                         prompt: video.prompt
                     };
-                    const videoHTML = templateFunction(fullVideo);
-                    videosContainer.innerHTML += videoHTML;
+                    videoElement.innerHTML = templateFunction(fullVideoData);
+                    container.appendChild(videoElement);
                 });
                 
                 loadedCases[caseId] = true;
             }
             
-            // Initialize the first case of the active tab
-            loadCaseVideos('t2v_case1');
+            // Function to load section videos (for sections without cases)
+            function loadSectionVideos(sectionId) {
+                const sectionData = videoData[sectionId];
+                if (!sectionData) return;
+                
+                // Find the container to insert videos into
+                const sectionContainer = document.getElementById(sectionId + '_container');
+                if (!sectionContainer) return;
+                
+                const container = sectionContainer.querySelector('.flex.flex-dynamic');
+                if (!container) return;
+                
+                // Clear any existing content
+                container.innerHTML = '';
+                
+                // Use the task template for ablation study
+                const templateFunction = createVideoTemplateTask({});
+                
+                // Create and append video elements
+                sectionData.videos.forEach(video => {
+                    const videoElement = document.createElement('div');
+                    const fullVideoData = {
+                        filename: sectionData.path + video.filename,
+                        prompt: video.prompt
+                    };
+                    videoElement.innerHTML = templateFunction(fullVideoData);
+                    container.appendChild(videoElement);
+                });
+            }
+            
+            // Load the initially active tab's content
+            const activeTabButton = document.querySelector('.tab-button.active');
+            if (activeTabButton) {
+                const initialSectionId = activeTabButton.getAttribute('data-section');
+                if (initialSectionId === 'video_1') {
+                    loadCaseVideos('t2v_case1');
+                    loadedCases['t2v_case1'] = true;
+                } else if (initialSectionId === 'video_2') {
+                    loadCaseVideos('i2v_case1');
+                    loadedCases['i2v_case1'] = true;
+                } else if (initialSectionId === 'video_3') {
+                    loadCaseVideos('vinp');
+                    loadedCases['vinp'] = true;
+                } else if (initialSectionId === 'video_4') {
+                    loadSectionVideos('video_4');
+                }
+                loadedSections[initialSectionId] = true;
+            }
         });
     </script>
 

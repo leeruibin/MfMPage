@@ -631,6 +631,7 @@
         
     <!-- Tab Navigation -->
     <div class="tab-navigation">
+        <button class="tab-button" data-section="video_0">&#128073;Click for Demo Video</button>
         <button class="tab-button" data-section="video_1">&#128073;Click for T2V Generation Results</button>
         <button class="tab-button" data-section="video_2">&#128073;Click for I2V Generation Results</button>
         <button class="tab-button" data-section="video_3">&#128073;Click for Multi-Task Results</button>
@@ -638,11 +639,27 @@
         <button class="tab-button" data-section="video_5">&#128073;Click for Failure Cases</button>
         <button class="tab-button" data-section="video_6">&#128073;Click for Visual Results of More tasks</button>
     </div>
-        
+
+    <div id="video_0_container" class="section-container">
+        <section id="video_0">
+            <div class="title">
+                Demo Video
+            </div>
+            <div class="flex-2 flex-dynamic-1" style="display: flex; justify-content: center;">
+                <div class="prompt-wrap full-screen-wrap" style="position: relative;">
+                    <div class="loading-placeholder">
+                        <div class="loading-text">Loading...</div>
+                        <div class="loading-icon">✨</div>
+                    </div>
+                    <video controls autoplay playsinline muted loop onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/videos/MfM_demo.mp4"></video>
+                </div>
+            </div>
+        </section>
+    </div>
     <div id="video_1_container" class="section-container">
         <section id="video_1">
             <div class="title">
-                Visual comparisions on T2V generation tasks
+                Visual comparisions on T2V generation tasks <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
                 <div class="case-tab-navigation">
                     <button class="case-tab-button active" data-section="t2v_case1">T2V-Case1: Beach Scene</button>
                     <button class="case-tab-button" data-section="t2v_case2">T2V-Case2: Snowstorm</button>
@@ -734,7 +751,7 @@
     <div id="video_2_container" class="section-container">
         <section id="video_2">
             <div class="title">
-                Visual comparisions on I2V generation tasks
+                Visual comparisions on I2V generation tasks <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
                 <!-- Case Tab Navigation -->
                 <div class="case-tab-navigation">
                     <button class="case-tab-button active" data-section="i2v_case1">I2V-Case1: Turtle</button>
@@ -828,7 +845,7 @@
     <div id="video_3_container" class="section-container">
         <section id="video_3">
             <div class="title">
-                Visual comparisions on Multi-Task Generation and Manipulation
+                Visual comparisions on Multi-Task Generation and Manipulation <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
                 <!-- Case Tab Navigation -->
                 <div class="case-tab-navigation">
                     <button class="case-tab-button active" data-section="vinp">Video Inpainting</button>
@@ -930,7 +947,7 @@
     <div id="video_4_container" class="section-container">
         <section id="video_4">
             <div class="title">
-                Visual comparisons of ablation study
+                Visual comparisons of ablation study <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
             </div>
 
             <div class="flex flex-dynamic">
@@ -942,7 +959,7 @@
     <div id="video_5_container" class="section-container">
         <section id="video_5">
             <div class="title">
-                Failure Cases
+                Failure Cases <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
             </div>
 
             <div class="flex flex-dynamic">
@@ -956,7 +973,7 @@
     <div id="video_6_container" class="section-container">
         <section id="video_6">
             <div class="title">
-                Visual Results of More Tasks
+                Visual Results of More Tasks <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos)</span>
                 <!-- Case Tab Navigation -->
                 <div class="case-tab-navigation">
                     <!-- Video tabs -->
@@ -1076,7 +1093,7 @@
         </section>
     </div>
 
-    <div class="flex-2 flex-dynamic-1" style="display: flex; justify-content: center;">
+    <!-- <div class="flex-2 flex-dynamic-1" style="display: flex; justify-content: center;">
         <div class="prompt-wrap full-screen-wrap" style="position: relative;">
             <div class="loading-placeholder">
                 <div class="loading-text">Loading...</div>
@@ -1084,7 +1101,7 @@
             </div>
             <video controls autoplay playsinline muted loop onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/videos/MfM_demo.mp4"></video>
         </div>
-    </div>
+    </div> -->
 
     <script>
         // Define a template function for displaying images

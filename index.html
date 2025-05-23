@@ -265,6 +265,7 @@
             color: #999;
             line-height: 25px;
             font-weight: 300;
+            text-align: center; /* Added center alignment */
         }
 
         .highlight {
@@ -642,23 +643,39 @@
 
     <div id="video_0_container" class="section-container active">
         <section id="video_0">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Demo Video
             </div>
-            <div class="flex-2 flex-dynamic-1" style="display: flex; justify-content: center;">
+            <!-- Simplified container structure -->
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                <div style="position: relative; max-width: 1280px; width: 100%;">
+                    <div class="loading-placeholder">
+                        <div class="loading-text">Loading...</div>
+                        <div class="loading-icon">✨</div>
+                    </div>
+                    <video controls autoplay playsinline muted loop 
+                        style="width: 100%; height: auto; margin: 0 auto; display: block;"
+                        onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" 
+                        src="./assets/videos/MfM_demo.mp4">
+                    </video>
+                </div>
+            </div>
+            <!-- <div class="flex-2 flex-dynamic-1" style="display: flex; justify-content: center;">
                 <div class="prompt-wrap full-screen-wrap" style="position: relative;">
                     <div class="loading-placeholder">
                         <div class="loading-text">Loading...</div>
                         <div class="loading-icon">✨</div>
                     </div>
-                    <video controls autoplay playsinline muted loop onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/videos/MfM_demo.mp4"></video>
+                    <video controls autoplay playsinline muted loop 
+                        style="width: 1280px; height: 720px; margin: 0 auto; display: block;"
+                        onloadeddata="this.style.display='block'; this.previousElementSibling.style.display='none';" src="./assets/videos/MfM_demo.mp4"></video>
                 </div>
-            </div>
+            </div> -->
         </section>
     </div>
     <div id="video_1_container" class="section-container">
         <section id="video_1">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Visual comparisions on T2V generation tasks <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
                 <div class="case-tab-navigation">
                     <button class="case-tab-button active" data-section="t2v_case1">T2V-Case1: Beach Scene</button>
@@ -673,7 +690,7 @@
 
             <!-- Case 1 -->
             <div id="t2v_case1_container" class="case-container active">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                 <h2><strong>Case 1: A beautiful coastal beach in spring, waves lapping on sand, oil painting.</strong>
                 </div>
                 <script>
@@ -721,7 +738,7 @@
             
             <!-- Case 2 -->
             <div id="t2v_case2_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                 <h2><strong>Case 2: A person walking in the snowstorm.</strong>
                 </div>
                 <div id="t2v_case2_videos" class="flex flex-dynamic">
@@ -730,7 +747,7 @@
 
             <!-- Case 3 -->
             <div id="t2v_case3_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                 <h2><strong>Case 3: A koala bear playing piano in the forest.</strong>
                 </div>
                 <div id="t2v_case3_videos" class="flex flex-dynamic">
@@ -739,7 +756,7 @@
 
             <!-- Case 4 -->
             <div id="t2v_case4_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                 <h2><strong>Case 4: A bicycle slowing down to stop.</strong></h2>
                 </div>
                 <div id="t2v_case4_videos" class="flex flex-dynamic">
@@ -750,7 +767,7 @@
 
     <div id="video_2_container" class="section-container">
         <section id="video_2">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Visual comparisions on I2V generation tasks <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
                 <!-- Case Tab Navigation -->
                 <div class="case-tab-navigation">
@@ -805,7 +822,7 @@
             
             <!-- Case 1 -->
             <div id="i2v_case1_container" class="case-container active">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Case 1: a sea turtle swimming in the ocean under the water.</strong>
                 </div>
                 <div id="i2v_case1_container" class="flex flex-dynamic">
@@ -814,7 +831,7 @@
             
             <!-- Case 2 -->
             <div id="i2v_case2_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Case 2: a dog carrying a soccer ball in its mouth.</strong>
                 </div>
                 <div id="i2v_case2_container" class="flex flex-dynamic">
@@ -823,7 +840,7 @@
 
             <!-- Case 3 -->
             <div id="i2v_case3_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Case 3: a blue fishing boat is navigating in the ocean next to a cruise ship.</strong>
                 </div>
                 <div id="i2v_case3_container" class="flex flex-dynamic">
@@ -832,7 +849,7 @@
             
             <!-- Case 4 -->
             <div id="i2v_case4_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Case 4: a couple of horses are running in the dirt.</strong>
                 </div>
                 <div id="i2v_case4_container" class="flex flex-dynamic">
@@ -844,7 +861,7 @@
 
     <div id="video_3_container" class="section-container">
         <section id="video_3">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Visual comparisions on Multi-Task Generation and Manipulation <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
                 <!-- Case Tab Navigation -->
                 <div class="case-tab-navigation">
@@ -907,7 +924,7 @@
             
             <!-- Case vinp -->
             <div id="vinp_container" class="case-container active">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Video Inpainting.</strong>
                 </div>
                 <div id="vinp_videos" class="flex flex-dynamic">
@@ -916,7 +933,7 @@
 
             <!-- Case voutp -->
             <div id="voutp_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Video Outpainting.</strong>
                 </div>
                 <div id="voutp_videos" class="flex flex-dynamic">
@@ -925,7 +942,7 @@
 
             <!-- Case vcolor -->
             <div id="vcolor_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>Video Colorization.</strong>
                 </div>
                 <div id="vcolor_videos" class="flex flex-dynamic">
@@ -934,7 +951,7 @@
 
             <!-- Case flf2v -->
             <div id="flf2v_container" class="case-container">
-                <div class="description">
+                <div class="description" style="text-align: center;">
                     <h2><strong>First-last-frame to Video.</strong>
                 </div>
                 <div id="flf2v_videos" class="flex flex-dynamic">
@@ -946,7 +963,7 @@
 
     <div id="video_4_container" class="section-container">
         <section id="video_4">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Visual comparisons of ablation study <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
             </div>
 
@@ -958,7 +975,7 @@
 
     <div id="video_5_container" class="section-container">
         <section id="video_5">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Failure Cases <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos) </span>
             </div>
 
@@ -972,7 +989,7 @@
     <!-- Add this new section container after video_5_container -->
     <div id="video_6_container" class="section-container">
         <section id="video_6">
-            <div class="title">
+            <div class="title" style="text-align: center;">
                 Visual Results of More Tasks <span style="color: rgb(0, 167, 209);">(Scroll down to view all videos)</span>
                 <!-- Case Tab Navigation -->
                 <div class="case-tab-navigation">
